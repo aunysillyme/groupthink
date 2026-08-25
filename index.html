@@ -703,39 +703,40 @@ var IZZY_SVG =
 
   '<g class="eyes">'+
    '<g class="eyeL">'+
-    '<ellipse cx="63" cy="57" rx="7.2" ry="7.6" fill="#FFF9EC" stroke="#3A241F" stroke-width=".8"/>'+
-    '<circle cx="63" cy="57" r="3.7" fill="#6B4730"/>'+
-    '<g class="pupilL"><circle cx="63" cy="57" r="2.2" fill="#171014"/>'+
-     '<circle cx="62.1" cy="55.9" r=".9" fill="#FFF9EC"/></g>'+
+    '<ellipse cx="63" cy="57" rx="8.6" ry="9" fill="#FFF9EC" stroke="#3A241F" stroke-width=".9"/>'+
+    '<g class="pupilL">'+
+     '<circle cx="63" cy="57" r="5.6" fill="#6B4730"/>'+
+     '<circle cx="63" cy="57" r="4.9" fill="#171014"/>'+
+     '<circle cx="61" cy="54.7" r="1.9" fill="#FFF9EC"/>'+
+     '<circle cx="65.2" cy="59.4" r="1" fill="#FFF9EC" opacity=".6"/></g>'+
    '</g>'+
    '<g class="eyeR">'+
-    '<ellipse cx="87" cy="57" rx="7.2" ry="7.3" fill="#FFF9EC" stroke="#3A241F" stroke-width=".8"/>'+
-    '<circle cx="87" cy="57" r="3.7" fill="#6B4730"/>'+
-    '<g class="pupilR"><circle cx="87" cy="57" r="2.2" fill="#171014"/>'+
-     '<circle cx="86.1" cy="55.9" r=".9" fill="#FFF9EC"/></g>'+
+    '<ellipse cx="87" cy="57" rx="8.6" ry="8.8" fill="#FFF9EC" stroke="#3A241F" stroke-width=".9"/>'+
+    '<g class="pupilR">'+
+     '<circle cx="87" cy="57" r="5.6" fill="#6B4730"/>'+
+     '<circle cx="87" cy="57" r="4.9" fill="#171014"/>'+
+     '<circle cx="85" cy="54.7" r="1.9" fill="#FFF9EC"/>'+
+     '<circle cx="89.2" cy="59.4" r="1" fill="#FFF9EC" opacity=".6"/></g>'+
    '</g>'+
-   '<path d="M56 56 Q63 50.5 70 56" fill="none" stroke="#8A5433" stroke-width=".9" opacity=".55"/>'+
-   '<path d="M80 56 Q87 50.5 94 56" fill="none" stroke="#8A5433" stroke-width=".9" opacity=".55"/>'+
+   '<path d="M54.5 55 Q63 48.5 71.5 55" fill="none" stroke="#8A5433" stroke-width="1" opacity=".5"/>'+
+   '<path d="M78.5 55 Q87 48.5 95.5 55" fill="none" stroke="#8A5433" stroke-width="1" opacity=".5"/>'+
   '</g>'+
   /* lids: skin-filled caps that drop to close. Above every eye part. */
   '<g class="lids">'+
-   '<ellipse cx="63" cy="57" rx="7.6" ry="7.9" fill="url(#sk)"/>'+
-   '<ellipse cx="87" cy="57" rx="7.6" ry="7.6" fill="url(#sk)"/>'+
+   '<ellipse cx="63" cy="57" rx="9" ry="9.4" fill="url(#sk)"/>'+
+   '<ellipse cx="87" cy="57" rx="9" ry="9.2" fill="url(#sk)"/>'+
   '</g>'+
   /* squint, shown only while laughing */
   '<g class="squint">'+
-   '<path d="M56 58 Q63 62 70 58" fill="none" stroke="#2A191A" stroke-width="1.5" stroke-linecap="round"/>'+
-   '<path d="M80 58 Q87 62 94 58" fill="none" stroke="#2A191A" stroke-width="1.5" stroke-linecap="round"/>'+
+   '<path d="M54.5 58 Q63 63 71.5 58" fill="none" stroke="#2A191A" stroke-width="1.5" stroke-linecap="round"/>'+
+   '<path d="M78.5 58 Q87 63 95.5 58" fill="none" stroke="#2A191A" stroke-width="1.5" stroke-linecap="round"/>'+
   '</g>'+
   '<g class="brows">'+
-   '<path d="M55 47 Q63 43.5 70 47" fill="none" stroke="#2A191A" stroke-width="2.6" stroke-linecap="round"/>'+
-   '<path d="M80 47 Q87 43.5 95 47" fill="none" stroke="#2A191A" stroke-width="2.6" stroke-linecap="round"/>'+
+   '<path d="M53.5 45.5 Q63 41.5 71.5 45.5" fill="none" stroke="#2A191A" stroke-width="2.6" stroke-linecap="round"/>'+
+   '<path d="M78.5 45.5 Q87 41.5 96.5 45.5" fill="none" stroke="#2A191A" stroke-width="2.6" stroke-linecap="round"/>'+
   '</g>'+
 
-  '<path d="M73 66 q2 3 4 0" fill="none" stroke="#6F402A" stroke-width=".9" opacity=".5"/>'+
-  '<circle cx="82" cy="67" r="1.9" fill="#F5D07A"/>'+
-  '<circle cx="64" cy="83" r="1.5" fill="#41231C"/>'+
-
+  
   '<g class="mouth">'+
    '<g class="mouthNeutral">'+
     '<path d="M68 76 Q75 78.5 82 76 Q75 82 68 76 Z" fill="#682C38"/>'+
@@ -822,13 +823,21 @@ var IZZY_CSS = `
   96%,100%{transform:scaleY(0)}
 }
 /* idle gaze: both pupils move together, never near the white's edge */
-.izzy .pupilL,.izzy .pupilR{animation:iz-look 7.9s ease-in-out infinite}
+.izzy .pupilL,.izzy .pupilR{animation:iz-look 6.4s cubic-bezier(.34,1.56,.64,1) infinite}
+/* the googly wobble: a constant tiny settle, out of phase per eye */
+.izzy .eyeL .pupilL{animation:iz-look 6.4s cubic-bezier(.34,1.56,.64,1) infinite,iz-wobble 2.3s ease-in-out infinite}
+.izzy .eyeR .pupilR{animation:iz-look 6.4s cubic-bezier(.34,1.56,.64,1) infinite,iz-wobble 2.7s ease-in-out infinite -.4s}
+@keyframes iz-wobble{0%,100%{translate:0 0}50%{translate:0 .55px}}
 @keyframes iz-look{
-  0%,16%,100%{transform:translate(0,0)}
-  28%,39%{transform:translate(-1.5px,-.3px)}
-  51%{transform:translate(0,.4px)}
-  66%,78%{transform:translate(1.6px,-.1px)}
-  89%{transform:translate(0,0)}
+  0%,14%{transform:translate(0,0)}
+  22%{transform:translate(-2.6px,-.5px)}
+  26%,36%{transform:translate(-2px,-.2px)}
+  44%{transform:translate(.5px,1.1px)}
+  48%,54%{transform:translate(0,.7px)}
+  62%{transform:translate(2.7px,-.4px)}
+  66%,80%{transform:translate(2.1px,-.1px)}
+  88%{transform:translate(-.4px,.3px)}
+  92%,100%{transform:translate(0,0)}
 }
 
 /* ---- mouth states ---- */
@@ -1036,10 +1045,7 @@ function makeIzzy(node){
 };
 
 var IZ = makeIzzy($("izzy"));
-function setIzzy(state,status){
-  IZ.set(state);
-  $("izzyStatus").textContent=status;
-}
+function setIzzy(state,status){ IZ.set(state); $("izzyStatus").textContent=status; }
 $("hideIzzy").addEventListener("click",function(){
   var h=$("izzy").classList.toggle("hidden");
   this.textContent=h?"show izzy":"hide izzy";
