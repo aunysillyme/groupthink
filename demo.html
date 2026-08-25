@@ -711,7 +711,10 @@ var IZZY_SVG =
 '</svg>';
 
 var IZZY_CSS = `
-#izzy,.izzy{display:block}
+#izzy,.izzy{display:block;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.izzy:focus-visible{outline:2px solid #E23A54;outline-offset:4px;border-radius:6px}
+.izzy[data-poke] .figure{animation:iz-poke .22s ease-out}
+@keyframes iz-poke{0%{transform:scale(1)}45%{transform:scale(1.06,.94)}100%{transform:scale(1)}}
 #izzy svg,.izzy svg{width:100%;height:auto;overflow:visible}
 
 /* transform anchors. Without these every rotation pivots on the wrong point. */
@@ -922,13 +925,14 @@ function makeIzzy(node){
   /* Playful actions are gated by state. She never does a backflip while the group
      is stuck, and never celebrates an option someone just ruled out. */
   var BY_STATE={
+    idle:      ["wave","hop","run","spin","sway","nod"],
     lost:      ["sway","nod"],
     anchor:    ["sway","nod","wave","hop","run"],
     empowered: ["hop","backflip","spin","wave","run","sway"]
   };
   var MOUTH={backflip:"laugh",hop:"laugh",spin:"smile",wave:"smile",run:"smile",sway:"neutral",nod:"neutral"};
 
-  var state="lost", busy=false, last="", timer=null, reduce=false;
+  var state="idle", busy=false, last="", timer=null, reduce=false;
   try{ reduce=matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
 
   function play(act){
@@ -949,18 +953,46 @@ function makeIzzy(node){
     return true;
   }
 
+  /* pick something she can do right now, never a repeat of the last one */
+  function pick(){
+    var pool=(BY_STATE[state]||[]).filter(function(a){return a!==last;});
+    return pool.length ? pool[Math.floor(Math.random()*pool.length)] : null;
+  }
+
   /* Random idle actions. Irregular gaps, never the same twice running, and only
      about two thirds of the time so the rhythm stays unpredictable. */
   function schedule(){
     clearTimeout(timer);
-    var wait = 7000 + Math.random()*13000;
+    var wait = 3500 + Math.random()*6500;
     timer=setTimeout(function(){
-      var pool=(BY_STATE[state]||[]).filter(function(a){return a!==last;});
-      if(pool.length && Math.random()<0.68) play(pool[Math.floor(Math.random()*pool.length)]);
+      var a=pick();
+      if(a && Math.random()<0.85) play(a);
       schedule();
     }, wait);
   }
   schedule();
+  setTimeout(function(){play("wave");},900);
+
+  /* Clicking her plays one of her moves. A click is a deliberate ask, so unlike
+     cursor movement it always gets an answer: if she is mid-action the click
+     lands as a small squash rather than being swallowed. */
+  function poke(){
+    if(reduce) return;
+    if(busy){
+      node.setAttribute("data-poke","1");
+      setTimeout(function(){node.removeAttribute("data-poke");},220);
+      return;
+    }
+    var a=pick();
+    if(a){ play(a); schedule(); }
+  }
+  node.setAttribute("role","button");
+  node.setAttribute("tabindex","0");
+  node.setAttribute("aria-label","Izzy. Click for a move.");
+  node.addEventListener("click",poke);
+  node.addEventListener("keydown",function(ev){
+    if(ev.code==="Enter"||ev.code==="Space"){ ev.preventDefault(); poke(); }
+  });
 
   return {
     node:node,
@@ -976,6 +1008,7 @@ function makeIzzy(node){
       if(react) setTimeout(function(){play(react);},220);
     },
     play:play,
+    poke:poke,
     hide:function(on){ node.classList.toggle("hidden",on); }
   };
 };
