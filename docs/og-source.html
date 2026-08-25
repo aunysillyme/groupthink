@@ -1,0 +1,64 @@
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,300..600&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#08050D;font-family:"JetBrains Mono",monospace;color:#E8DFD0;position:relative}
+.bg{position:absolute;inset:0;background:radial-gradient(70% 70% at 50% 40%,#1E1230 0%,#0D0814 58%,#08050D 100%)}
+svg.grid{position:absolute;inset:0}
+.wm{position:absolute;left:64px;top:56px}
+.wm h1{font-family:"JetBrains Mono";font-size:52px;font-weight:700;letter-spacing:-.02em;color:#E23A54}
+.wm h1 span{color:#E8DFD0}
+.wm .tag{font-family:Fraunces,serif;font-size:38px;color:#E8DFD0;margin-top:14px;line-height:1.15;font-weight:400}
+.wm .sub{font-size:15px;color:#8A7A9B;margin-top:16px;line-height:1.7;max-width:520px}
+.wm .sub b{color:#E8DFD0;font-weight:500}
+.chip{position:absolute;left:64px;bottom:52px;display:flex;gap:9px}
+.chip span{border:1px solid #3D2C4A;padding:6px 13px;font-size:12px;letter-spacing:.1em;color:#8A7A9B}
+.chip span.hot{border-color:#E23A54;color:#E23A54}
+.kill{position:absolute;background:#2A0F19;border:1px solid #8E1F3D;color:#F0A8B4;font-size:14px;padding:6px 12px;white-space:nowrap}
+</style>
+<div class="bg"></div>
+<svg class="grid" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="p0"><stop offset="0" stop-color="#A886C4" stop-opacity=".95"/><stop offset="1" stop-color="#A886C4" stop-opacity="0"/></radialGradient>
+    <radialGradient id="p1"><stop offset="0" stop-color="#7FAE8C" stop-opacity=".95"/><stop offset="1" stop-color="#7FAE8C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="p2"><stop offset="0" stop-color="#86A4CC" stop-opacity=".95"/><stop offset="1" stop-color="#86A4CC" stop-opacity="0"/></radialGradient>
+    <radialGradient id="p3"><stop offset="0" stop-color="#DFA95F" stop-opacity=".95"/><stop offset="1" stop-color="#DFA95F" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g stroke="#7E669E" stroke-opacity=".17">
+    <path d="M700 630 L810 400"/><path d="M840 630 L878 400"/><path d="M980 630 L946 400"/><path d="M1120 630 L1014 400"/><path d="M1260 630 L1082 400"/>
+    <path d="M600 470 H1250"/><path d="M660 440 H1230"/><path d="M700 418 H1215"/><path d="M730 402 H1205"/>
+  </g>
+  <!-- living branches to the surviving option -->
+  <g fill="none" stroke="#7FAE8C" stroke-width="2.4" stroke-opacity=".85">
+    <path d="M916 300 Q 860 250 806 232"/><path d="M916 300 Q 990 250 1052 244"/><path d="M916 300 Q 900 380 862 424"/>
+  </g>
+  <!-- a severed branch: the mechanic -->
+  <g fill="none" stroke="#E23A54" stroke-width="2.6" stroke-dasharray="5 9">
+    <path d="M1052 244 Q 1090 350 1070 452"/>
+  </g>
+  <!-- blooms -->
+  <g>
+    <circle cx="806" cy="232" r="46" fill="url(#p0)"/><circle cx="806" cy="232" r="9" fill="#2B1A22"/>
+    <circle cx="1052" cy="244" r="46" fill="url(#p2)"/><circle cx="1052" cy="244" r="9" fill="#2B1A22"/>
+    <circle cx="862" cy="424" r="42" fill="url(#p3)"/><circle cx="862" cy="424" r="8" fill="#2B1A22"/>
+  </g>
+  <!-- surviving option -->
+  <circle cx="916" cy="300" r="26" fill="#22331E" stroke="#7FAE8C" stroke-width="3"/>
+  <circle cx="916" cy="300" r="9" fill="#7FAE8C"/>
+  <!-- fallen option, on the floor -->
+  <g transform="translate(1070 470) rotate(24)" opacity=".55">
+    <circle r="22" fill="#1F1429" stroke="#3A2A44" stroke-width="2"/><circle r="7" fill="#4A3550"/>
+  </g>
+  <text x="916" y="256" text-anchor="middle" fill="#CFE6C8" font-family="JetBrains Mono" font-size="19" font-weight="700">Taqueria Luz</text>
+  <text x="806" y="196" text-anchor="middle" fill="#E8DFD0" font-family="JetBrains Mono" font-size="16">Maya</text>
+  <text x="1052" y="208" text-anchor="middle" fill="#E8DFD0" font-family="JetBrains Mono" font-size="16">Jess</text>
+  <text x="862" y="482" text-anchor="middle" fill="#E8DFD0" font-family="JetBrains Mono" font-size="16">Kai</text>
+</svg>
+<div class="kill" style="left:960px;top:516px">Jess &middot; 22 min walk</div>
+<div class="wm">
+  <h1>group<span>ies</span></h1>
+  <div class="tag">Nobody gets<br>outvoted.</div>
+  <div class="sub">Options are never voted down. Each one dies on a <b>named person's stated limit</b>, and it is not decided until <b>everyone signs</b>.</div>
+</div>
+<div class="chip"><span class="hot">RULE OUT, DON'T VOTE</span><span>PROTECT THE WORST-OFF</span><span>UNANIMOUS OR NOTHING</span></div>
