@@ -145,7 +145,7 @@ a{color:var(--accent)}
 .sig.in{border-color:currentColor;background:#141E15;color:var(--txt)}
 
 /* bottom-left: Izzy + her plain-text status */
-.izzybox{bottom:0;left:0;display:flex;align-items:flex-end;gap:0}
+.izzybox{bottom:0;left:12px;display:flex;align-items:flex-end;gap:0}
 #izzy{width:292px;flex:none;transition:opacity .4s;margin-bottom:-6px}
 #izzy.hidden{opacity:0}
 #izzy svg{display:block;width:100%;height:auto;overflow:visible}
@@ -567,181 +567,350 @@ PEOPLE.forEach(function(p){
 var ticks=document.getElementById("ticks");
 STEPS.forEach(function(){ticks.appendChild(document.createElement("i"));});
 
-/* -- Izzy: 2.5D layered SVG, canon held.
-   Face permanently veiled. Reacts to the STATE OF THE PROCESS, never to a person.
-   Deadlock reads as contemplative stillness, never distress. -- */
-document.getElementById("izzy").innerHTML=
-'<svg viewBox="0 0 150 180" aria-hidden="true"><defs>'+
-'<radialGradient id="sk" cx="34%" cy="24%"><stop offset="0%" stop-color="#E2AE82"/><stop offset="60%" stop-color="#AE744B"/><stop offset="100%" stop-color="#79492C"/></radialGradient>'+
-'<radialGradient id="hr" cx="32%" cy="14%"><stop offset="0%" stop-color="#6B4C79"/><stop offset="45%" stop-color="#2C1D39"/><stop offset="100%" stop-color="#100A18"/></radialGradient>'+
-'<radialGradient id="gw" cx="32%" cy="6%"><stop offset="0%" stop-color="#63497D"/><stop offset="50%" stop-color="#312042"/><stop offset="100%" stop-color="#140D1E"/></radialGradient>'+
-'<linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3E2C4F"/><stop offset="44%" stop-color="#251834"/><stop offset="100%" stop-color="#150E20"/></linearGradient>'+
-'<linearGradient id="bt" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#523B62"/><stop offset="46%" stop-color="#281A38"/><stop offset="100%" stop-color="#120B1A"/></linearGradient>'+
-'<radialGradient id="ga" cx="32%" cy="24%"><stop offset="0%" stop-color="#DA4A6B"/><stop offset="100%" stop-color="#6B1230"/></radialGradient>'+
-'<radialGradient id="vi" cx="32%" cy="24%"><stop offset="0%" stop-color="#A273BB"/><stop offset="100%" stop-color="#402654"/></radialGradient>'+
-'<radialGradient id="rd" cx="32%" cy="24%"><stop offset="0%" stop-color="#FF7C8E"/><stop offset="100%" stop-color="#C71736"/></radialGradient>'+
-'<radialGradient id="au" cx="50%" cy="50%"><stop offset="0%" stop-color="#E0A356" stop-opacity=".5"/><stop offset="100%" stop-color="#E0A356" stop-opacity="0"/></radialGradient>'+
-'<radialGradient id="fg" cx="50%" cy="50%"><stop offset="0%" stop-color="#A886C4" stop-opacity=".22"/><stop offset="100%" stop-color="#A886C4" stop-opacity="0"/></radialGradient>'+
-'<radialGradient id="sh" cx="50%" cy="50%"><stop offset="0%" stop-color="#000000" stop-opacity=".66"/><stop offset="100%" stop-color="#000000" stop-opacity="0"/></radialGradient>'+
-'<linearGradient id="rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#EDE4D2" stop-opacity=".6"/><stop offset="100%" stop-color="#EDE4D2" stop-opacity="0"/></linearGradient>'+
-'<radialGradient id="fc" cx="50%" cy="42%"><stop offset="62%" stop-color="#000000" stop-opacity="0"/><stop offset="100%" stop-color="#1A0E1E" stop-opacity=".55"/></radialGradient>'+
+var IZZY_SVG =
+'<svg viewBox="0 0 150 182" aria-hidden="true"><defs>'+
+'<radialGradient id="sk" cx="36%" cy="26%"><stop offset="0%" stop-color="#EBB98C"/><stop offset="58%" stop-color="#B87A50"/><stop offset="100%" stop-color="#8A5433"/></radialGradient>'+
+'<radialGradient id="hr" cx="34%" cy="14%"><stop offset="0%" stop-color="#4C343A"/><stop offset="46%" stop-color="#2A1D22"/><stop offset="100%" stop-color="#140E11"/></radialGradient>'+
+'<radialGradient id="gw" cx="34%" cy="10%"><stop offset="0%" stop-color="#7B5C94"/><stop offset="52%" stop-color="#422C59"/><stop offset="100%" stop-color="#281A36"/></radialGradient>'+
+'<linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2E2438"/><stop offset="46%" stop-color="#1B1425"/><stop offset="100%" stop-color="#110C18"/></linearGradient>'+
+'<linearGradient id="bt" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#453450"/><stop offset="48%" stop-color="#241B30"/><stop offset="100%" stop-color="#150F1D"/></linearGradient>'+
+'<radialGradient id="ga" cx="34%" cy="26%"><stop offset="0%" stop-color="#A8425C"/><stop offset="70%" stop-color="#742038"/><stop offset="100%" stop-color="#4A1122"/></radialGradient>'+
+'<radialGradient id="vi" cx="34%" cy="26%"><stop offset="0%" stop-color="#9A6FB4"/><stop offset="70%" stop-color="#5E3876"/><stop offset="100%" stop-color="#372046"/></radialGradient>'+
+'<radialGradient id="rd" cx="34%" cy="26%"><stop offset="0%" stop-color="#FF8497"/><stop offset="68%" stop-color="#E23A54"/><stop offset="100%" stop-color="#B01430"/></radialGradient>'+
+'<radialGradient id="au" cx="50%" cy="50%"><stop offset="0%" stop-color="#E0A356" stop-opacity=".55"/><stop offset="100%" stop-color="#E0A356" stop-opacity="0"/></radialGradient>'+
+'<radialGradient id="sh" cx="50%" cy="50%"><stop offset="0%" stop-color="#000000" stop-opacity=".62"/><stop offset="100%" stop-color="#000000" stop-opacity="0"/></radialGradient>'+
+'<radialGradient id="bl" cx="50%" cy="50%"><stop offset="0%" stop-color="#E8788C" stop-opacity=".55"/><stop offset="100%" stop-color="#E8788C" stop-opacity="0"/></radialGradient>'+
+'<linearGradient id="rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#EDE4D2" stop-opacity=".55"/><stop offset="60%" stop-color="#EDE4D2" stop-opacity="0"/></linearGradient>'+
 '</defs>'+
-'<ellipse cx="75" cy="170" rx="42" ry="6.5" fill="url(#sh)"/>'+
-'<g class="L0">'+
- '<ellipse class="aura" cx="75" cy="88" rx="76" ry="86" fill="url(#au)" opacity=".14"/>'+
- '<g class="halo" opacity=".2">'+
-  '<circle cx="75" cy="50" r="49" fill="none" stroke="#EDE4D2" stroke-width="3.2" stroke-dasharray="112 250" transform="rotate(-40 75 50)"/>'+
-  '<circle cx="75" cy="50" r="49" fill="none" stroke="#EDE4D2" stroke-width="1" opacity=".5" stroke-dasharray="112 250" transform="rotate(-40 75 50)"/>'+
- '</g>'+
-'</g>'+
-'<g class="L1" opacity=".42" stroke="#1B1226" stroke-width="2.2" fill="none" stroke-linecap="round">'+
- '<path d="M5 12 q25 22 20 48 M5 12 q15 6 25 3 M25 60 q10 6 8 15"/>'+
- '<path d="M145 8 q-25 24-20 50 M145 8 q-15 8-25 4"/>'+
-'</g>'+
-'<g class="L2">'+
- /* hair falls behind, past the chest, in a soft rounded fall */
- '<path d="M45 46 q-13 44-6 76 q13 8 20 5 q-9-38-2-72z" fill="url(#hr)"/>'+
- '<path d="M105 46 q13 44 6 76 q-13 8-20 5 q9-38 2-72z" fill="url(#hr)"/>'+
- '<path d="M43 44 q-6 40 3 62 q29 8 58 0 q9-22 3-62 q-8-28-32-28 t-32 28z" fill="url(#hr)"/>'+
- /* stubby legs in opaque tights, then little buckled boots */
- '<g class="legL"><path d="M62 118 q6-2 12 0 q2 15 0 28 q-6 3-12 0 q-2-13 0-28z" fill="url(#tg)"/></g>'+
- '<g class="legR"><path d="M76 118 q6-2 12 0 q2 15 0 28 q-6 3-12 0 q-2-13 0-28z" fill="url(#tg)"/></g>'+
- '<path d="M58 142 q8-4 17 0 q3 11-1 15 q-9 3-18 0 q-2-9 2-15z" fill="url(#bt)" stroke="#5E4470" stroke-width=".9"/>'+
- '<path d="M75 142 q8-4 17 0 q3 11-1 15 q-9 3-18 0 q-2-9 2-15z" fill="url(#bt)" stroke="#5E4470" stroke-width=".9"/>'+
- '<path d="M60 151 q8 3 15 0 M77 151 q8 3 15 0" stroke="#8266A0" stroke-width="1.1" fill="none" opacity=".75"/>'+
- /* the lace dress: high neck, chunky chibi torso */
- '<path d="M58 86 q17-6 34 0 q9 13 11 32 q-28 8-56 0 q2-19 11-32z" fill="url(#gw)" stroke="#604A7A" stroke-width="1"/>'+
- '<path d="M65 84 q10-4 20 0 l-1.5 7 q-9-3-17 0z" fill="#382544"/>'+
- '<g stroke="#8266A0" stroke-width=".85" fill="none" opacity=".78">'+
-  '<path d="M50 105 q25 7 50 0"/><path d="M48 114 q27 8 54 0"/><path d="M66 92 v25"/><path d="M84 92 v25"/>'+
- '</g>'+
- /* long lace sleeves ending in small chibi hands */
- '<g class="armL">'+
-  '<path d="M59 89 q-12 7-13 22 q5 4 11 2 q-2-15 7-20z" fill="#2B1C39" stroke="#604A7A" stroke-width=".9"/>'+
-  '<circle cx="51" cy="116" r="6.6" fill="url(#sk)"/>'+
-  '<path d="M46.5 115 q4.5-3 9 0" stroke="#79492C" stroke-width="1" fill="none" opacity=".55"/>'+
- '</g>'+
- '<g class="armR">'+
-  '<path d="M91 89 q12 7 13 22 q-5 4-11 2 q2-15-7-20z" fill="#2B1C39" stroke="#604A7A" stroke-width=".9"/>'+
-  '<circle cx="99" cy="116" r="6.6" fill="url(#sk)"/>'+
-  '<path d="M94.5 115 q4.5-3 9 0" stroke="#79492C" stroke-width="1" fill="none" opacity=".55"/>'+
- '</g>'+
- '<path d="M40 52 q-7 34 0 58" fill="none" stroke="url(#rim)" stroke-width="2.6" opacity=".45" stroke-linecap="round"/>'+
-'</g>'+
-'<g class="L3"><g class="head">'+
- '<circle cx="75" cy="56" r="32" fill="url(#sk)"/>'+
- '<circle cx="75" cy="56" r="32" fill="url(#fc)"/>'+
- /* only the lower face shows: full lips, beauty mark lower-left, gold stud left nostril */
- '<path d="M67 77 q8-4.5 16 0 q-8 7.5-16 0z" fill="#6E2B36"/>'+
- '<path d="M67 77 q4.5-3 8-1 q3.5-2 8 1" fill="none" stroke="#9A464F" stroke-width="1.2"/>'+
- '<circle cx="65.5" cy="83" r="1.4" fill="#4A2A22"/>'+
- '<circle cx="68" cy="70" r="1.7" fill="#F2CB70"/>'+
- /* hair frames the face and finishes the veil at the sides */
- '<path d="M43 54 q0-34 32-34 t32 34 q-9-18-32-18 t-32 18z" fill="url(#hr)"/>'+
- '<path d="M44 48 q-7 28 0 42 q-11-18-6-42z" fill="url(#hr)"/>'+
- '<path d="M106 48 q7 28 0 42 q11-18 6-42z" fill="url(#hr)"/>'+
- '<path d="M47 34 q11-14 27-16" fill="none" stroke="#8A7A9B" stroke-width="1.4" opacity=".38"/>'+
- /* THE VEIL. Permanent occlusion of the eyes and upper face. Never parts. */
- '<g class="veil">'+
-  '<circle cx="50" cy="52" r="11" fill="url(#vi)"/>'+
-  '<circle cx="64" cy="43" r="13" fill="url(#ga)"/>'+
-  '<circle cx="86" cy="44" r="12" fill="url(#vi)"/>'+
-  '<circle cx="100" cy="53" r="10.5" fill="url(#ga)"/>'+
-  '<circle cx="57" cy="63" r="9" fill="url(#ga)"/>'+
-  '<circle cx="93" cy="64" r="8.5" fill="url(#vi)"/>'+
-  '<circle cx="75" cy="57" r="10" fill="url(#vi)"/>'+
-  '<circle class="rose" cx="75" cy="54" r="8" fill="url(#rd)" opacity=".92"/>'+
-  '<g stroke="#2A1424" stroke-width="1" fill="none" opacity=".58">'+
-   '<circle cx="64" cy="43" r="6.2"/><circle cx="86" cy="44" r="5.8"/><circle cx="50" cy="52" r="5.2"/>'+
-   '<circle cx="100" cy="53" r="5"/><circle cx="75" cy="54" r="3.8"/>'+
+
+'<ellipse class="shadow" cx="75" cy="168" rx="40" ry="6" fill="url(#sh)"/>'+
+
+/* everything that can flip lives inside .stage; .figure carries squash and lean */
+'<g class="stage"><g class="figure">'+
+
+  '<g class="L0">'+
+   '<ellipse class="aura" cx="75" cy="92" rx="72" ry="80" fill="url(#au)" opacity=".12"/>'+
+   '<g class="halo" opacity=".14">'+
+    '<circle cx="75" cy="52" r="46" fill="none" stroke="#EDE4D2" stroke-width="3" stroke-dasharray="112 250" transform="rotate(-42 75 52)"/>'+
+   '</g>'+
   '</g>'+
- '</g>'+
+
+  /* hair falls behind everything, with soft tapered tips */
+  '<g class="hairBack">'+
+   '<path d="M44 52 q-12 40-7 66 q4 8 11 9 q4-3 2-9 q-8-32 0-62z" fill="url(#hr)"/>'+
+   '<path d="M106 52 q12 40 7 66 q-4 8-11 9 q-4-3-2-9 q8-32 0-62z" fill="url(#hr)"/>'+
+   '<path d="M42 50 q-4 34 3 54 q30 8 60 0 q7-20 3-54 q-8-26-33-26 t-33 26z" fill="url(#hr)"/>'+
+  '</g>'+
+
+  /* legs: each anchored at the hip so they can swing independently */
+  '<g class="legL"><path d="M63 112 q6-2 11 0 q2 14 0 26 q-6 3-11 0 q-2-12 0-26z" fill="url(#tg)"/>'+
+   '<path d="M57 134 q8-4 16 0 q3 10-1 14 q-9 3-17 0 q-2-9 2-14z" fill="url(#bt)" stroke="#6B5080" stroke-width=".9"/>'+
+   '<path d="M59 142 q8 3 14 0" stroke="#9077AE" stroke-width="1.1" fill="none" opacity=".75"/></g>'+
+  '<g class="legR"><path d="M76 112 q6-2 11 0 q2 14 0 26 q-6 3-11 0 q-2-12 0-26z" fill="url(#tg)"/>'+
+   '<path d="M77 134 q8-4 16 0 q3 10-1 14 q-9 3-17 0 q-2-9 2-14z" fill="url(#bt)" stroke="#6B5080" stroke-width=".9"/>'+
+   '<path d="M79 142 q8 3 14 0" stroke="#9077AE" stroke-width="1.1" fill="none" opacity=".75"/></g>'+
+
+  /* torso: chunky, rounded, soft lace rather than a window grid */
+  '<g class="torso">'+
+   '<path d="M58 84 q17-6 34 0 q8 12 9 30 q-26 8-52 0 q1-18 9-30z" fill="url(#gw)"/>'+
+   '<path d="M64 82 q11-4 22 0 l-1.5 7 q-10-3-19 0z" fill="#3E2A52"/>'+
+   '<g stroke="#9077AE" stroke-width=".8" fill="none" opacity=".55">'+
+    '<path d="M52 100 q23 6 46 0"/><path d="M50 108 q25 7 50 0"/>'+
+   '</g>'+
+   '<path d="M58 86 q-5 14-4 28" fill="none" stroke="url(#rim)" stroke-width="2.4" opacity=".5" stroke-linecap="round"/>'+
+  '</g>'+
+
+  /* arms anchored at the shoulder: short, with mitten hands */
+  '<g class="armL">'+
+   '<path d="M58 88 q-11 6-13 20 q6 4 12 2 q-1-14 8-18z" fill="#31204A"/>'+
+   '<circle cx="49" cy="112" r="7.4" fill="url(#sk)"/>'+
+   '<path d="M45 111 q4-3 8 0" stroke="#8A5433" stroke-width="1" fill="none" opacity=".5"/>'+
+  '</g>'+
+  '<g class="armR">'+
+   '<path d="M92 88 q11 6 13 20 q-6 4-12 2 q1-14-8-18z" fill="#31204A"/>'+
+   '<circle cx="101" cy="112" r="7.4" fill="url(#sk)"/>'+
+   '<path d="M97 111 q4-3 8 0" stroke="#8A5433" stroke-width="1" fill="none" opacity=".5"/>'+
+  '</g>'+
+
+  '<g class="head">'+
+   '<ellipse cx="75" cy="57" rx="34" ry="31" fill="url(#sk)"/>'+
+   /* blush: cuteness that lives entirely on the permitted lower face */
+   '<ellipse class="blush" cx="52" cy="72" rx="9" ry="6" fill="url(#bl)"/>'+
+   '<ellipse class="blush" cx="98" cy="72" rx="9" ry="6" fill="url(#bl)"/>'+
+   /* two mouths, cross-faded. Canon permits the lower face, so she may smile. */
+   '<path class="mouthRest" d="M68 76 q7 3.5 14 0 q-7 5-14 0z" fill="#6E2B36"/>'+
+   '<g class="mouthSmile">'+
+    '<path d="M65 74 q10 11 20 0 q-10 4-20 0z" fill="#5E2230"/>'+
+    '<path d="M65 74 q10 11 20 0" fill="none" stroke="#9A464F" stroke-width="1.5" stroke-linecap="round"/>'+
+   '</g>'+
+   '<circle cx="62" cy="84" r="1.5" fill="#41231C"/>'+
+   '<path d="M79 68 q4-3 8 0" fill="none" stroke="#8A5433" stroke-width="1.1" opacity=".45"/>'+
+'<circle cx="82" cy="69" r="1.9" fill="#F5D07A"/>'+
+   /* hair frames the face and finishes the veil at the sides */
+   '<path d="M41 54 q0-32 34-32 t34 32 q-10-17-34-17 t-34 17z" fill="url(#hr)"/>'+
+   '<path d="M42 50 q-6 26 1 40 q-11-17-7-40z" fill="url(#hr)"/>'+
+   '<path d="M108 50 q6 26-1 40 q11-17 7-40z" fill="url(#hr)"/>'+
+   '<path d="M46 34 q11-13 26-15" fill="none" stroke="#C6B4D6" stroke-width="1.5" opacity=".3"/>'+
+   /* THE VEIL. Permanent occlusion of the eyes and upper face. Never parts. */
+   '<g class="veil">'+
+    '<g class="rose r1"><circle cx="50" cy="50" r="11" fill="url(#vi)"/>'+
+     '<path d="M43 48 q7-6 14 0 q-7 5-14 0z" fill="#C79BDD" opacity=".5"/><circle cx="50" cy="50" r="3.4" fill="#3E2452" opacity=".6"/></g>'+
+    '<g class="rose r2"><circle cx="64" cy="41" r="13" fill="url(#ga)"/>'+
+     '<path d="M56 39 q8-7 16 0 q-8 6-16 0z" fill="#F58AA3" opacity=".45"/><circle cx="64" cy="41" r="4" fill="#68112E" opacity=".55"/></g>'+
+    '<g class="rose r3"><circle cx="84" cy="40" r="11" fill="url(#vi)"/>'+
+     '<path d="M78 38 q6-5 12 0 q-6 5-12 0z" fill="#C79BDD" opacity=".45"/><circle cx="84" cy="40" r="3.5" fill="#372046" opacity=".5"/></g>'+
+    '<g class="rose r4"><circle cx="101" cy="51" r="10" fill="url(#ga)"/>'+
+     '<path d="M95 49 q6-5 12 0 q-6 5-12 0z" fill="#F58AA3" opacity=".45"/><circle cx="101" cy="51" r="3.2" fill="#68112E" opacity=".55"/></g>'+
+    '<g class="rose r5"><circle cx="57" cy="61" r="8.5" fill="url(#ga)"/>'+
+     '<circle cx="57" cy="61" r="2.8" fill="#68112E" opacity=".5"/></g>'+
+    '<g class="rose r6"><circle cx="97" cy="60" r="8.5" fill="url(#vi)"/>'+
+     '<circle cx="97" cy="60" r="2.7" fill="#372046" opacity=".5"/></g>'+
+    '<g class="rose r7"><circle cx="72" cy="53" r="10.5" fill="url(#ga)"/>'+
+     '<circle cx="72" cy="53" r="3.3" fill="#4A1122" opacity=".5"/></g>'+
+    /* the single point of colour */
+    '<g class="rose rose1"><circle class="redrose" cx="89" cy="47" r="9" fill="url(#rd)"/>'+
+     '<path d="M83 45 q6-5 12 0 q-6 5-12 0z" fill="#FFC0CB" opacity=".45"/>'+
+     '<circle cx="89" cy="47" r="2.9" fill="#B01430" opacity=".55"/></g>'+
+   '</g>'+
+  '</g>'+
+
 '</g></g>'+
-'<g class="L4">'+
- '<g class="moth" transform="translate(126 40)">'+
-  '<path d="M0 0 q-11-9-14 1 q3 8 14 3z" fill="#1C1327"/>'+
-  '<path d="M0 0 q11-9 14 1 q-3 8-14 3z" fill="#1C1327"/>'+
-  '<ellipse cx="0" cy="1.7" rx="1.8" ry="4.5" fill="#0C0810"/>'+
- '</g>'+
- '<ellipse class="fogf" cx="75" cy="166" rx="82" ry="13" fill="url(#fg)"/>'+
+
+'<g class="moth" opacity=".55" transform="translate(130 26) scale(.6)">'+
+ '<path d="M0 0 q-10-8-13 1 q3 8 13 3z" fill="#241832"/>'+
+ '<path d="M0 0 q10-8 13 1 q-3 8-13 3z" fill="#241832"/>'+
+ '<ellipse cx="0" cy="1.6" rx="1.7" ry="4.2" fill="#100A18"/>'+
 '</g>'+
 '</svg>';
 
-/* Izzy motion: independent periods so nothing visibly syncs (4.8s / 7s / 11s). */
-var st=document.createElement("style");
-st.textContent=
-"#izzy .L2{animation:breathe 4.8s ease-in-out infinite}"+
-"#izzy .L3{animation:breathe 4.8s ease-in-out infinite;animation-delay:-.12s}"+
-"@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.2px)}}"+
-"#izzy .L1{animation:drift 7s ease-in-out infinite}"+
-"@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(2.4px)}}"+
-"#izzy .fogf{animation:fogx 11s ease-in-out infinite}"+
-"@keyframes fogx{0%,100%{transform:translateX(-9px);opacity:.6}50%{transform:translateX(9px);opacity:1}}"+
-"#izzy .moth{animation:flit 9s ease-in-out infinite}"+
-"@keyframes flit{0%,100%{transform:translate(126px,40px)}31%{transform:translate(138px,26px) rotate(-9deg)}67%{transform:translate(114px,18px) rotate(7deg)}}"+
-"#izzy .head,#izzy .L2,#izzy .veil,#izzy .rose,#izzy .halo,#izzy .aura,#izzy .armL,#izzy .armR,#izzy .legL,#izzy .legR{transition:transform 1.1s cubic-bezier(.22,.61,.36,1),opacity 1.1s}"+
-"#izzy .armL,#izzy .armR{transform-box:fill-box;transform-origin:50% 8%;transition-delay:.06s}"+
-"#izzy .legL,#izzy .legR{transform-box:fill-box;transform-origin:50% 0%;transition-delay:.1s}"+
-"#izzy[data-state=lost] .legL{transform:rotate(2.5deg)}#izzy[data-state=lost] .legR{transform:rotate(-2.5deg)}"+
-"#izzy[data-state=lost] .armL{transform:rotate(9deg) translateX(4px)}#izzy[data-state=lost] .armR{transform:rotate(-9deg) translateX(-4px)}"+
-"#izzy[data-state=empowered] .armL{transform:rotate(-7deg) translate(-3px,-2px)}#izzy[data-state=empowered] .armR{transform:rotate(7deg) translate(3px,-2px)}"+
-"#izzy .veil{transition-delay:.12s}#izzy .L2{transition-delay:.08s}"+
-"#izzy .head{transform-box:fill-box;transform-origin:50% 94%}"+
-"#izzy .veil{transform-box:fill-box;transform-origin:center}"+
-/* LOST: turned partly away, bowed, closed silhouette. Uncertainty, never shame. */
-"#izzy[data-state=lost] .head{transform:rotate(-9deg) translateY(3px)}"+
-"#izzy[data-state=lost] .veil{transform:scale(.93)}"+
-"#izzy[data-state=lost] .rose{opacity:.45}"+
-"#izzy[data-state=lost] .halo{opacity:.07}"+
-"#izzy[data-state=lost] .aura{opacity:.05}"+
-"#izzy[data-state=lost] .armL{transform:translateX(5px)}"+
-"#izzy[data-state=lost] .armR{transform:translateX(-5px)}"+
-/* ANCHOR: steadying, balanced, blooms opening. The state seen for most of the flow. */
-"#izzy[data-state=anchor] .head{transform:rotate(-2deg)}"+
-"#izzy[data-state=anchor] .veil{transform:scale(1)}"+
-"#izzy[data-state=anchor] .rose{opacity:.85}"+
-"#izzy[data-state=anchor] .halo{opacity:.22}"+
-"#izzy[data-state=anchor] .aura{opacity:.14}"+
-/* EMPOWERED: upright, chin lifted, face STILL veiled. Only at true unanimity. */
-"#izzy[data-state=empowered] .head{transform:translateY(-4px)}"+
-"#izzy[data-state=empowered] .veil{transform:scale(1.11)}"+
-"#izzy[data-state=empowered] .rose{opacity:1}"+
-"#izzy[data-state=empowered] .halo{opacity:.62}"+
-"#izzy[data-state=empowered] .aura{opacity:.5}"+
-/* transient reactions, layered on top, always returning to the persistent state */
-"#izzy[data-react=brace] .L2{transform:translateY(1px) scaleX(.985)}"+
-"#izzy[data-react=consider] .armR{transform:translate(-7px,-5px) rotate(-7deg)}"+
-"#izzy[data-react=consider] .rose{opacity:1}"+
-"#izzy[data-react=release] .veil{transform:scale(1.06)}";
-document.head.appendChild(st);
+var IZZY_CSS = `
+#izzy,.izzy{display:block}
+#izzy svg,.izzy svg{width:100%;height:auto;overflow:visible}
 
-/* micro-events: one small action every 12-30s, never the same twice running */
-var ACTS=["shift","chin","moth","sleeve"], lastAct="";
-(function micro(){
-  var wait=12000+Math.random()*18000;
-  setTimeout(function(){
-    var pool=ACTS.filter(function(a){return a!==lastAct;});
-    var a=pool[Math.floor(Math.random()*pool.length)];
-    if(Math.random()<0.72){
-      lastAct=a;
-      var n=document.getElementById("izzy");
-      n.setAttribute("data-micro",a);
-      setTimeout(function(){n.removeAttribute("data-micro");},1200+Math.random()*400);
-    }
-    micro();
-  },wait);
-})();
+/* transform anchors. Without these every rotation pivots on the wrong point. */
+.izzy .stage   {transform-box:fill-box;transform-origin:50% 62%}
+.izzy .figure  {transform-box:fill-box;transform-origin:50% 100%}
+.izzy .head    {transform-box:fill-box;transform-origin:50% 92%}
+.izzy .veil    {transform-box:fill-box;transform-origin:50% 60%}
+.izzy .torso   {transform-box:fill-box;transform-origin:50% 0%}
+.izzy .armL,.izzy .armR{transform-box:fill-box;transform-origin:62% 6%}
+.izzy .armR   {transform-origin:38% 6%}
+.izzy .legL,.izzy .legR{transform-box:fill-box;transform-origin:50% 2%}
+.izzy .hairBack{transform-box:fill-box;transform-origin:50% 4%}
+.izzy .rose    {transform-box:fill-box;transform-origin:center}
+
+/* ---- idle: independent periods so nothing visibly loops together ---- */
+.izzy .figure  {animation:iz-breathe 4.8s ease-in-out infinite}
+.izzy .hairBack{animation:iz-hair 7.3s ease-in-out infinite}
+.izzy .veil    {animation:iz-veil 6.1s ease-in-out infinite}
+.izzy .moth    {animation:iz-flit 9.7s ease-in-out infinite}
+.izzy .shadow  {animation:iz-shadow 4.8s ease-in-out infinite}
+@keyframes iz-breathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-2px) scaleY(1.012)}}
+@keyframes iz-hair{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}
+@keyframes iz-veil{0%,100%{transform:scale(1) rotate(-.5deg)}50%{transform:scale(1.018) rotate(.5deg)}}
+@keyframes iz-shadow{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.97);opacity:.9}}
+@keyframes iz-flit{
+  0%,100%{transform:translate(126px,34px) rotate(0)}
+  28%{transform:translate(138px,20px) rotate(-10deg)}
+  61%{transform:translate(112px,14px) rotate(8deg)}
+}
+
+/* ---- smile, cross-faded on the permitted lower face ---- */
+.izzy .mouthSmile{opacity:0;transition:opacity .32s ease}
+.izzy .mouthRest {opacity:1;transition:opacity .32s ease}
+.izzy .blush{opacity:.55;transition:opacity .5s ease}
+.izzy[data-smile="1"] .mouthSmile{opacity:1}
+.izzy[data-smile="1"] .mouthRest {opacity:0}
+.izzy[data-smile="1"] .blush{opacity:1}
+
+/* ---- persistent states ---- */
+.izzy .head,.izzy .armL,.izzy .armR,.izzy .legL,.izzy .legR,.izzy .redrose,.izzy .halo,.izzy .aura{
+  transition:transform 1.1s cubic-bezier(.22,.61,.36,1),opacity 1.1s}
+.izzy[data-state=lost] .head{transform:rotate(-8deg) translateY(2px)}
+.izzy[data-state=lost] .armL{transform:rotate(8deg)}
+.izzy[data-state=lost] .armR{transform:rotate(-8deg)}
+.izzy[data-state=lost] .redrose{opacity:.5}
+.izzy[data-state=lost] .halo{opacity:.06}
+.izzy[data-state=lost] .aura{opacity:.04}
+.izzy[data-state=anchor] .head{transform:rotate(-1.5deg)}
+.izzy[data-state=anchor] .halo{opacity:.22}
+.izzy[data-state=anchor] .aura{opacity:.13}
+.izzy[data-state=empowered] .head{transform:translateY(-3px)}
+.izzy[data-state=empowered] .armL{transform:rotate(-10deg)}
+.izzy[data-state=empowered] .armR{transform:rotate(10deg)}
+.izzy[data-state=empowered] .halo{opacity:.6}
+.izzy[data-state=empowered] .aura{opacity:.5}
+
+/* ---- playful actions. Each overrides idle on the part it drives. ---- */
+
+/* BACKFLIP: the whole stage rotates once; hair and veil lag behind the body. */
+.izzy[data-act=backflip] .stage{animation:iz-flip 1.15s cubic-bezier(.3,.05,.25,1)}
+.izzy[data-act=backflip] .hairBack{animation:iz-flip-hair 1.15s cubic-bezier(.3,.05,.25,1)}
+.izzy[data-act=backflip] .legL{animation:iz-flip-legL 1.15s ease-in-out}
+.izzy[data-act=backflip] .legR{animation:iz-flip-legR 1.15s ease-in-out}
+.izzy[data-act=backflip] .armL{animation:iz-flip-armL 1.15s ease-in-out}
+.izzy[data-act=backflip] .armR{animation:iz-flip-armR 1.15s ease-in-out}
+.izzy[data-act=backflip] .shadow{animation:iz-flip-shadow 1.15s ease-in-out}
+@keyframes iz-flip{
+  0%{transform:translateY(0) rotate(0) scale(1)}
+  12%{transform:translateY(6px) rotate(-6deg) scale(1.04,.9)}
+  30%{transform:translateY(-42px) rotate(-120deg) scale(.95,1.06)}
+  55%{transform:translateY(-56px) rotate(-240deg) scale(.95,1.04)}
+  80%{transform:translateY(-10px) rotate(-338deg) scale(1,1)}
+  92%{transform:translateY(4px) rotate(-360deg) scale(1.06,.88)}
+  100%{transform:translateY(0) rotate(-360deg) scale(1)}
+}
+@keyframes iz-flip-hair{
+  0%{transform:rotate(0)}22%{transform:rotate(16deg)}52%{transform:rotate(-14deg)}
+  78%{transform:rotate(9deg)}100%{transform:rotate(0)}
+}
+@keyframes iz-flip-legL{0%,100%{transform:rotate(0)}30%{transform:rotate(-38deg)}60%{transform:rotate(22deg)}}
+@keyframes iz-flip-legR{0%,100%{transform:rotate(0)}30%{transform:rotate(-20deg)}60%{transform:rotate(34deg)}}
+@keyframes iz-flip-armL{0%,100%{transform:rotate(0)}25%{transform:rotate(-52deg)}70%{transform:rotate(18deg)}}
+@keyframes iz-flip-armR{0%,100%{transform:rotate(0)}25%{transform:rotate(52deg)}70%{transform:rotate(-18deg)}}
+@keyframes iz-flip-shadow{0%,100%{transform:scaleX(1);opacity:1}45%{transform:scaleX(.45);opacity:.35}}
+
+/* RUN IN PLACE: legs alternate, arms counter-pump, body bobs on the double. */
+.izzy[data-act=run] .figure{animation:iz-run-body .34s ease-in-out infinite}
+.izzy[data-act=run] .legL{animation:iz-run-legL .68s ease-in-out infinite}
+.izzy[data-act=run] .legR{animation:iz-run-legR .68s ease-in-out infinite}
+.izzy[data-act=run] .armL{animation:iz-run-armL .68s ease-in-out infinite}
+.izzy[data-act=run] .armR{animation:iz-run-armR .68s ease-in-out infinite}
+.izzy[data-act=run] .hairBack{animation:iz-run-hair .68s ease-in-out infinite}
+@keyframes iz-run-body{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes iz-run-legL{0%,100%{transform:rotate(26deg)}50%{transform:rotate(-26deg)}}
+@keyframes iz-run-legR{0%,100%{transform:rotate(-26deg)}50%{transform:rotate(26deg)}}
+@keyframes iz-run-armL{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(26deg)}}
+@keyframes iz-run-armR{0%,100%{transform:rotate(30deg)}50%{transform:rotate(-26deg)}}
+@keyframes iz-run-hair{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+
+/* WAVE: one arm only, with a small lean toward the viewer. */
+.izzy[data-act=wave] .armR{animation:iz-wave 1.5s ease-in-out}
+.izzy[data-act=wave] .figure{animation:iz-wave-lean 1.5s ease-in-out}
+.izzy[data-act=wave] .head{animation:iz-wave-head 1.5s ease-in-out}
+@keyframes iz-wave{
+  0%{transform:rotate(0)}18%{transform:rotate(-118deg)}
+  34%{transform:rotate(-96deg)}50%{transform:rotate(-126deg)}
+  66%{transform:rotate(-98deg)}82%{transform:rotate(-120deg)}100%{transform:rotate(0)}
+}
+@keyframes iz-wave-lean{0%,100%{transform:rotate(0)}40%{transform:rotate(3deg)}}
+@keyframes iz-wave-head{0%,100%{transform:rotate(0)}40%{transform:rotate(5deg)}}
+
+/* HOP: small two-beat bounce with squash and stretch. */
+.izzy[data-act=hop] .stage{animation:iz-hop .78s cubic-bezier(.3,.05,.25,1)}
+.izzy[data-act=hop] .hairBack{animation:iz-hop-hair .78s ease-in-out}
+.izzy[data-act=hop] .shadow{animation:iz-hop-shadow .78s ease-in-out}
+@keyframes iz-hop{
+  0%,100%{transform:translateY(0) scale(1)}
+  14%{transform:translateY(3px) scale(1.06,.9)}
+  46%{transform:translateY(-22px) scale(.96,1.07)}
+  78%{transform:translateY(2px) scale(1.05,.93)}
+}
+@keyframes iz-hop-hair{0%,100%{transform:rotate(0)}40%{transform:rotate(-9deg)}70%{transform:rotate(5deg)}}
+@keyframes iz-hop-shadow{0%,100%{transform:scaleX(1);opacity:1}46%{transform:scaleX(.7);opacity:.55}}
+
+/* SPIN: a flat pirouette. scaleX through zero reads as turning, and the veil
+   never opens because the whole head turns as one piece. */
+.izzy[data-act=spin] .figure{animation:iz-spin 1s ease-in-out}
+.izzy[data-act=spin] .hairBack{animation:iz-spin-hair 1s ease-in-out}
+@keyframes iz-spin{
+  0%,100%{transform:scaleX(1)}
+  25%{transform:scaleX(.15)}50%{transform:scaleX(-1)}75%{transform:scaleX(.15)}
+}
+@keyframes iz-spin-hair{0%,100%{transform:rotate(0)}30%{transform:rotate(11deg)}70%{transform:rotate(-11deg)}}
+
+/* SWAY: the smallest one, a weight shift. */
+.izzy[data-act=sway] .figure{animation:iz-sway 2.1s ease-in-out}
+@keyframes iz-sway{0%,100%{transform:rotate(0)}30%{transform:rotate(-3deg)}70%{transform:rotate(3deg)}}
+
+/* NOD: acknowledges without a big gesture. */
+.izzy[data-act=nod] .head{animation:iz-nod 1.1s ease-in-out}
+@keyframes iz-nod{0%,100%{transform:rotate(0)}30%{transform:rotate(7deg) translateY(2px)}65%{transform:rotate(-2deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  .izzy *{animation:none !important}
+  .izzy .mouthSmile,.izzy .mouthRest,.izzy .blush{transition:none}
+}
+`;
+
+/* Izzy's behaviour: idle life, random playful actions, and a state machine that
+   answers to app events. She reacts to the STATE OF THE PROCESS, never to a person. */
+function makeIzzy(node){
+  node.classList.add("izzy");
+  node.innerHTML = IZZY_SVG;
+  if(!document.getElementById("izzy-style")){
+    var st=document.createElement("style");
+    st.id="izzy-style"; st.textContent=IZZY_CSS;
+    document.head.appendChild(st);
+  }
+
+  var DUR={backflip:1150,run:2400,wave:1500,hop:780,spin:1000,sway:2100,nod:1100};
+  /* Playful actions are gated by state. She never does a backflip while the group
+     is stuck, and never celebrates an option someone just ruled out. */
+  var BY_STATE={
+    lost:      ["sway","nod"],
+    anchor:    ["sway","nod","wave","hop","run"],
+    empowered: ["hop","backflip","spin","wave","run","sway"]
+  };
+  var SMILE={backflip:1,hop:1,spin:1,wave:1,run:1,sway:0,nod:0};
+
+  var state="lost", busy=false, last="", timer=null, reduce=false;
+  try{ reduce=matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
+
+  function play(act){
+    if(busy || reduce || node.classList.contains("hidden")) return false;
+    busy=true; last=act;
+    node.setAttribute("data-act",act);
+    if(SMILE[act]) node.setAttribute("data-smile","1");
+    setTimeout(function(){
+      node.removeAttribute("data-act");
+      /* she keeps the smile a moment after the move, then settles */
+      setTimeout(function(){
+        if(state!=="empowered") node.removeAttribute("data-smile");
+      }, 900);
+      busy=false;
+    }, DUR[act]||1000);
+    return true;
+  }
+
+  /* Random idle actions. Irregular gaps, never the same twice running, and only
+     about two thirds of the time so the rhythm stays unpredictable. */
+  function schedule(){
+    clearTimeout(timer);
+    var wait = 7000 + Math.random()*13000;
+    timer=setTimeout(function(){
+      var pool=(BY_STATE[state]||[]).filter(function(a){return a!==last;});
+      if(pool.length && Math.random()<0.68) play(pool[Math.floor(Math.random()*pool.length)]);
+      schedule();
+    }, wait);
+  }
+  schedule();
+
+  return {
+    node:node,
+    /* app events set the semantic state; a fitting reaction fires once */
+    set:function(next, react){
+      if(next && next!==state){
+        state=next;
+        node.setAttribute("data-state",state);
+        if(state==="empowered"){ node.setAttribute("data-smile","1"); setTimeout(function(){play("backflip");},260); }
+        else if(state==="anchor"){ setTimeout(function(){play("nod");},300); }
+        else { node.removeAttribute("data-smile"); }
+      }
+      if(react) setTimeout(function(){play(react);},220);
+    },
+    play:play,
+    hide:function(on){ node.classList.toggle("hidden",on); }
+  };
+};
+
+var IZ = makeIzzy($("izzy"));
 
 /* -- beats ------------------------------------------- */
 function $(i){return document.getElementById(i);}
 var cur=-1, auto=true, izzyEl=$("izzy");
 
-function setReact(r,ms){
-  izzyEl.setAttribute("data-react",r);
-  setTimeout(function(){
-    if(izzyEl.getAttribute("data-react")===r) izzyEl.setAttribute("data-react","none");
-  },ms||1400);
-}
+function setReact(r,ms){ if(r&&r!=="none") IZ.play(r); }
 
 function render(n){
   var prevN=cur; cur=n; var s=STEPS[n];
@@ -755,12 +924,11 @@ function render(n){
   $("next").textContent=(n===STEPS.length-1)?"replay":"next";
 
   /* Izzy: app events drive semantic state; reactions are transient, then return. */
-  izzyEl.setAttribute("data-state",s.st);
+  IZ.set(s.st);
   if(n!==prevN){
-    if(n===3) setReact("brace",1600);
-    else if(n===4) setReact("none",1);
-    else if(n===5) setReact("consider",1800);
-    else if(n===6||n===7) setReact("release",1500);
+    if(n===5) setReact("nod");
+    else if(n===6) setReact("wave");
+    else if(n===7) setReact("backflip");
   }
 
   /* rack */
