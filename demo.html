@@ -226,7 +226,7 @@ a{color:var(--accent)}
   </div>
 
   <div class="ov izzybox">
-    <div id="izzy" data-state="lost" data-react="none"></div>
+    <div id="izzy" data-state="idle" data-react="none"></div>
     <div class="izzymeta">
       <div class="nm">IZZY</div>
       <div class="stt" id="izzyStatus"></div>
@@ -276,9 +276,9 @@ var WIN=OPTS[3];
 /* Izzy's plain-text status. Codex rule: never encode critical state only in her pose. */
 var STEPS=[
  {k:"00",t:"room",     l:"Five people, one question, and nobody has said the real thing yet.",
-  st:"lost",   sx:"listening for limits",              tail:"/ five people, one call"},
+  st:"idle",   sx:"listening for limits",              tail:"/ five people, one call"},
  {k:"01",t:"intake",   l:"Everyone types privately. Nobody sees anyone else's.",
-  st:"lost",   sx:"listening for limits",              tail:"/ 5 of 5 submitted, privately"},
+  st:"idle",   sx:"listening for limits",              tail:"/ 5 of 5 submitted, privately"},
  {k:"02",t:"limits",   l:"The model pulls the real limits out of what they said. Four hard, one soft.",
   st:"anchor", sx:"four paths open",                   tail:"/ 4 hard, 1 soft"},
  {k:"03",t:"ruled out",l:"Nothing is voted down. Each option dies on a named person's stated limit.",
@@ -732,7 +732,7 @@ var IZZY_CSS = `
 .izzy[data-state=lost] .redrose{opacity:.5}
 .izzy[data-state=lost] .halo{opacity:.06}
 .izzy[data-state=lost] .aura{opacity:.04}
-.izzy[data-state=anchor] .head{transform:rotate(-1.5deg)}
+.izzy[data-state=idle] .head{transform:rotate(-1.5deg)}\n.izzy[data-state=idle] .halo{opacity:.18}\n.izzy[data-state=idle] .aura{opacity:.1}\n.izzy[data-state=anchor] .head{transform:rotate(-1.5deg)}
 .izzy[data-state=anchor] .halo{opacity:.22}
 .izzy[data-state=anchor] .aura{opacity:.13}
 .izzy[data-state=empowered] .head{transform:translateY(-3px)}
@@ -821,11 +821,11 @@ var IZZY_CSS = `
 
 /* SWAY: the smallest one, a weight shift. */
 .izzy[data-act=sway] .figure{animation:iz-sway 2.1s ease-in-out}
-@keyframes iz-sway{0%,100%{transform:rotate(0)}30%{transform:rotate(-3deg)}70%{transform:rotate(3deg)}}
+@keyframes iz-sway{0%,100%{transform:rotate(0) translateY(0)}28%{transform:rotate(-7deg) translateY(-3px)}62%{transform:rotate(7deg) translateY(-3px)}}
 
 /* NOD: acknowledges without a big gesture. */
 .izzy[data-act=nod] .head{animation:iz-nod 1.1s ease-in-out}
-@keyframes iz-nod{0%,100%{transform:rotate(0)}30%{transform:rotate(7deg) translateY(2px)}65%{transform:rotate(-2deg)}}
+@keyframes iz-nod{0%,100%{transform:rotate(0)}26%{transform:rotate(14deg) translateY(4px)}58%{transform:rotate(-6deg) translateY(-1px)}82%{transform:rotate(4deg)}}
 
 @media (prefers-reduced-motion:reduce){
   .izzy *{animation:none !important}
@@ -848,13 +848,14 @@ function makeIzzy(node){
   /* Playful actions are gated by state. She never does a backflip while the group
      is stuck, and never celebrates an option someone just ruled out. */
   var BY_STATE={
+    idle:      ["wave","hop","run","spin","sway","nod"],
     lost:      ["sway","nod"],
     anchor:    ["sway","nod","wave","hop","run"],
     empowered: ["hop","backflip","spin","wave","run","sway"]
   };
   var SMILE={backflip:1,hop:1,spin:1,wave:1,run:1,sway:0,nod:0};
 
-  var state="lost", busy=false, last="", timer=null, reduce=false;
+  var state="idle", busy=false, last="", timer=null, reduce=false;
   try{ reduce=matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
 
   function play(act){
@@ -877,14 +878,15 @@ function makeIzzy(node){
      about two thirds of the time so the rhythm stays unpredictable. */
   function schedule(){
     clearTimeout(timer);
-    var wait = 7000 + Math.random()*13000;
+    var wait = 3500 + Math.random()*6500;
     timer=setTimeout(function(){
       var pool=(BY_STATE[state]||[]).filter(function(a){return a!==last;});
-      if(pool.length && Math.random()<0.68) play(pool[Math.floor(Math.random()*pool.length)]);
+      if(pool.length && Math.random()<0.85) play(pool[Math.floor(Math.random()*pool.length)]);
       schedule();
     }, wait);
   }
   schedule();
+  setTimeout(function(){play("wave");},900);
 
   return {
     node:node,
