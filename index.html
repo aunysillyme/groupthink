@@ -1,27 +1,27 @@
-<title>Groupies</title>
+<title>Groupthink</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Group decisions without a vote. Options are ruled out by a named person's stated limit, the winner protects whoever is worst off, and nothing is decided until everyone signs.">
 <meta name="theme-color" content="#08050D">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Groupies">
-<meta property="og:title" content="Groupies · nobody gets outvoted">
+<meta property="og:site_name" content="Groupthink">
+<meta property="og:title" content="Groupthink · nobody gets outvoted">
 <meta property="og:description" content="Group decisions without a vote. Options are ruled out by a named person's stated limit, the winner protects whoever is worst off, and nothing is decided until everyone signs.">
-<meta property="og:url" content="https://aunysillyme.github.io/groupies/">
-<meta property="og:image" content="https://aunysillyme.github.io/groupies/og.png">
+<meta property="og:url" content="https://aunysillyme.github.io/groupthink/">
+<meta property="og:image" content="https://aunysillyme.github.io/groupthink/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Three people as glowing blooms linked to a surviving option, with one branch severed and tagged: Jess, 22 min walk.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Groupies · nobody gets outvoted">
+<meta name="twitter:title" content="Groupthink · nobody gets outvoted">
 <meta name="twitter:description" content="Group decisions without a vote. Options are ruled out by a named person's stated limit, the winner protects whoever is worst off, and nothing is decided until everyone signs.">
-<meta name="twitter:image" content="https://aunysillyme.github.io/groupies/og.png">
+<meta name="twitter:image" content="https://aunysillyme.github.io/groupthink/og.png">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOTJlbScgZm9udC1zaXplPSc5Mic+8J+MuTwvdGV4dD48L3N2Zz4=">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,300..600&display=swap">
 <style>
-/* Groupies. Nocturne palette, three.js example chrome: viewport first, chrome as raw
+/* Groupthink. Nocturne palette, three.js example chrome: viewport first, chrome as raw
    overlay, monospace, hard edges, zero border-radius, no cards, grid floor. */
 :root{
   --bg:#0A0710;
@@ -303,13 +303,13 @@ button.ghost:hover{color:var(--txt);border-color:var(--dim)}
 <div class="wrap" id="wrap">
   <canvas id="view"></canvas>
 
-  <div class="ov stats"><div class="sv" id="statLine">GROUPIES</div><canvas id="graph" width="132" height="26"></canvas></div>
-  <div class="ov title"><b>groupies</b> <span id="titleTail">/ nobody gets outvoted</span></div>
+  <div class="ov stats"><div class="sv" id="statLine">GROUPTHINK</div><canvas id="graph" width="132" height="26"></canvas></div>
+  <div class="ov title"><b>group</b><span style="color:var(--txt)">think</span> <span id="titleTail">/ nobody gets outvoted</span></div>
 
   <!-- 0 setup -->
   <div class="screen on" id="s0"><div class="sheet">
     <h1 class="big">What are you deciding?</h1>
-    <p class="sub">Groupies never holds a vote. Everyone puts in what they want, then options get ruled out by a named person's stated limit. It is not finished until every person signs.</p>
+    <p class="sub">Groupthink never holds a vote. Everyone puts in what they want, then options get ruled out by a named person's stated limit. It is not finished until every person signs.</p>
     <div class="lbl">THE QUESTION</div>
     <input class="t" id="qIn" placeholder="Where are we eating tonight?" autocomplete="off">
     <div class="lbl">WHO IS DECIDING, AND WHAT THEY WANT <span id="pCount"></span></div>
@@ -623,7 +623,7 @@ function drawResults(){
     var w=a.alive[0];
     var txt=S.q+"\n\nDecided: "+w.o+" (put in by "+(S.optBy[w.o]||[]).join(", ")+")\n\nRuled out:\n"+
       a.dead.map(function(d){return "  "+d.o+" - "+d.k.map(function(k){return k.p+": "+k.why;}).join("; ");}).join("\n")+
-      "\n\nSigned: "+S.people.filter(function(p){return S.signed[p];}).join(", ")+"\n\nvia groupies";
+      "\n\nSigned: "+S.people.filter(function(p){return S.signed[p];}).join(", ")+"\n\nvia groupthink";
     navigator.clipboard.writeText(txt).then(function(){b.textContent="copied";},function(){b.textContent="copy failed";});
   };
   Array.prototype.forEach.call($("resSheet").querySelectorAll("[data-sign]"),function(el){
